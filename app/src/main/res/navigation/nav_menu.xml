@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_menu"
+    app:startDestination="@id/startFragment">
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="ru.fom.barcodeapplication.ui.start.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_createCodeFragment2"
+            app:destination="@id/createCodeFragment2" />
+        <action
+            android:id="@+id/action_startFragment_to_readBarCodeFragment2"
+            app:destination="@id/readBarCodeFragment2" />
+        <action
+            android:id="@+id/action_startFragment_to_resultCodeFragment2"
+            app:destination="@id/resultCodeFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/createCodeFragment2"
+        android:name="ru.fom.barcodeapplication.ui.create.CreateCodeFragment"
+        android:label="fragment_create_code"
+        tools:layout="@layout/fragment_create_code" />
+    <fragment
+        android:id="@+id/resultCodeFragment2"
+        android:name="ru.fom.barcodeapplication.ui.results.ResultCodeFragment"
+        android:label="fragment_result_code"
+        tools:layout="@layout/fragment_result_code" />
+    <fragment
+        android:id="@+id/readBarCodeFragment2"
+        android:name="ru.fom.barcodeapplication.ui.read.ReadBarCodeFragment"
+        android:label="fragment_read_bar_code"
+        tools:layout="@layout/fragment_read_bar_code" />
+</navigation>
