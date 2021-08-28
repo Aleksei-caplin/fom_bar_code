@@ -11,33 +11,42 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/read_fragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Прочитать QR Code"
         android:layout_marginTop="@dimen/margin_32"
+        android:layout_marginRight="@dimen/margin_32"
+        android:layout_marginLeft="@dimen/margin_32"
         android:padding="@dimen/margin_24"
+        app:backgroundTint="@color/button_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/create_fragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Создать QR Code"
         android:layout_marginTop="@dimen/margin_32"
+        android:layout_marginRight="@dimen/margin_32"
+        android:layout_marginLeft="@dimen/margin_32"
         android:padding="@dimen/margin_24"
+        app:backgroundTint="@color/button_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/read_fragment"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/results_fragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Просмотреть результаты"
         android:layout_marginTop="@dimen/margin_32"
+        android:layout_marginRight="@dimen/margin_32"
+        android:layout_marginLeft="@dimen/margin_32"
         android:padding="@dimen/margin_24"
+        app:backgroundTint="@color/button_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_fragment"/>
