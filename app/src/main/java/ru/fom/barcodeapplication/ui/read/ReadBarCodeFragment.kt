@@ -1,6 +1,7 @@
 package ru.fom.barcodeapplication.ui.read
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.util.Log
@@ -18,6 +19,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import kotlinx.android.synthetic.main.fragment_read_bar_code.*
 import ru.fom.barcodeapplication.R
+import ru.fom.barcodeapplication.RootActivity
 import ru.fom.barcodeapplication.ui.base.BaseFragment
 import ru.fom.barcodeapplication.viewmodels.ReadCodeViewModel
 import java.io.File
@@ -105,7 +107,7 @@ class ReadBarCodeFragment : BaseFragment<ReadCodeViewModel>() {
                 .setTargetAspectRatio(screenAspectRatio)
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)*/
                 .build()
-                .also { it.setAnalyzer(cameraExecutor, CustomAnalyzer { luma ->
+                .also { it.setAnalyzer(cameraExecutor, CustomAnalyzer(main) { luma ->
                         Log.d(TAG, "Average luminosity: $luma")
                     })
                 }
@@ -177,7 +179,7 @@ class ReadBarCodeFragment : BaseFragment<ReadCodeViewModel>() {
         }
     }
 
-    private class CustomAnalyzer(private val listener:(Any?) -> Unit) : ImageAnalysis.Analyzer {
+    private class CustomAnalyzer(val context: RootActivity, private val listener:(Any?) -> Unit) : ImageAnalysis.Analyzer {
 
         val scanner = BarcodeScanning.getClient()
 
@@ -188,9 +190,9 @@ class ReadBarCodeFragment : BaseFragment<ReadCodeViewModel>() {
             return data // Return the byte array
         }
 
+        @SuppressLint("UnsafeOptInUsageError")
         override fun analyze(imageProxy: ImageProxy
-        .) {
-
+        ) {
             val mediaImage = imageProxy.image
             if (mediaImage != null) {
                 val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
@@ -201,26 +203,26 @@ class ReadBarCodeFragment : BaseFragment<ReadCodeViewModel>() {
                                 val ssid = barcode.wifi!!.ssid
                                 val password = barcode.wifi!!.password
                                 val type = barcode.wifi!!.encryptionType
-                                Log.d("M_wifi", "ok")
+                                Toast.makeText(context, "TYPE_WIFI", Toast.LENGTH_LONG).show()
                             }
                             Barcode.TYPE_URL -> {
                                 val title = barcode.url!!.title
                                 val url = barcode.url!!.url
-                                Log.d("M_url", url)
+                                Toast.makeText(context, "TYPE_URL", Toast.LENGTH_LONG).show()
                             }
                             Barcode.FORMAT_QR_CODE -> {
-                                Log.d("M_qr", "ok")
+                                Toast.makeText(context, barcode.displayValue, Toast.LENGTH_LONG).show()
                             }
                             Barcode.TYPE_TEXT -> {
-                                Toast.makeText(, "TYPE_TEXT", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, barcode.displayValue, Toast.LENGTH_LONG).show()
+                            }
+                            Barcode.TYPE_UNKNOWN -> {
+                            Toast.makeText(context, barcode.displayValue, Toast.LENGTH_LONG).show()
                             }
                         }
                     }
                 }
-
-
             }
-
             //listener.invoke(image)
 
             imageProxy.close()
@@ -231,8 +233,6 @@ class ReadBarCodeFragment : BaseFragment<ReadCodeViewModel>() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
-
-
 
     companion object {
         private const val TAG = "CameraXBasic"
